@@ -1,0 +1,4 @@
+interface:
+  display_name: "文档审查与维护"
+  short_description: "分别检查文档事实、读者理解、模块覆盖和代码变化带来的维护影响"
+  default_prompt: "使用 $repo-docs-review 核对仓库文档与代码是否一致，检查遗漏并建立增量维护规则。"

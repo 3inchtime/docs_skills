@@ -1,0 +1,24 @@
+name: Validate skills
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Validate skill structure and references
+        run: python3 scripts/check_skills.py
+      - name: Test documentation tools
+        run: python3 -m unittest discover -s tests -v
+      - name: Check browser component syntax
+        run: node --check skills/repo-docs-site/assets/flow-reader.js

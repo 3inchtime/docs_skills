@@ -1,0 +1,11 @@
+%% 合成示例：用于学习图源格式，不代表任何目标仓库。
+flowchart TD
+  accTitle: CSV 导出教学示例
+  accDescr: 这是合成流程。日期须填写且开始日不晚于结束日。参数错误或写入失败分别结束；保存成功后返回下载入口。
+  start["选择日期并请求导出"] --> validate{"日期已填写且开始日不晚于结束日？"}
+  validate -->|否| invalid["返回日期参数错误"]
+  validate -->|是| read["读取日期范围内记录"]
+  read --> generate["将记录转换为 CSV"]
+  generate --> write{"文件保存成功？"}
+  write -->|否| failed["返回写入错误"]
+  write -->|是| done["返回下载入口"]

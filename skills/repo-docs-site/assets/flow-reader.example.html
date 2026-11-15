@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>流程逐项说明组件 · 合成示例</title>
+  <link rel="stylesheet" href="flow-reader.css" data-flow-inline="style">
+  <style>
+    body { margin: 0; background: #f2f5f1; color: #17362e; font: 16px/1.75 system-ui, sans-serif; }
+    main { max-width: 1000px; margin: 0 auto; padding: 32px 18px 64px; }
+    .example-label { font-weight: 700; }
+    .example-note { padding: 12px 16px; border-left: 4px solid #84682f; background: #fff8e9; }
+    @media print { body { background: white; } main { padding: 0; } }
+  </style>
+  <script src="flow-reader.js" defer data-flow-inline="script"></script>
+</head>
+<body>
+<main>
+  <h1>报告导出：把图和逐项说明放在一起</h1>
+  <p class="example-label">合成示例 · 不代表任何目标仓库的实现。</p>
+  <p class="example-note">本例设定：日期须填写且开始日不晚于结束日；校验通过后生成 CSV 并返回下载入口，否则返回参数错误。阅读顺序不代表执行路径，具体分支看图中箭头。接入真实文档时按源码替换场景与证据。</p>
+  <repo-flow-reader aria-labelledby="export-title">
+    <h2 id="export-title">日期范围决定是否继续生成文件</h2>
+    <p class="flow-intro">图展示分支；下方说明保留每项的输入、动作和结果。按钮只突出当前说明，完整内容始终可读。</p>
+    <figure>
+      <div class="flow-diagram">
+        <svg viewBox="0 0 820 320" role="img" aria-labelledby="diagram-title diagram-description">
+          <title id="diagram-title">合成报告导出流程</title>
+          <desc id="diagram-description">选择日期后检查日期是否填写、开始日是否不晚于结束日。有效则生成 CSV 并返回下载入口；无效则返回参数错误。此图只描述合成示例。</desc>
+          <defs><marker id="export-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#466454"/></marker></defs>
+          <g fill="none" stroke="#466454" stroke-width="2" marker-end="url(#export-arrow)">
+            <path d="M175 90 H215"/>
+            <path d="M385 90 H445"/>
+            <path d="M605 90 H645"/>
+            <path d="M300 125 V205" stroke-dasharray="6 4"/>
+          </g>
+          <g font-family="sans-serif" font-size="15" text-anchor="middle" fill="#17362e">
+            <g data-node-id="choose_range"><rect x="15" y="55" width="160" height="70" rx="6" fill="#edf5f0" stroke="#466454"/><text x="95" y="96">选择日期范围</text></g>
+            <g data-node-id="validate_range"><rect x="215" y="55" width="170" height="70" rx="6" fill="#edf5f0" stroke="#466454"/><text x="300" y="87">检查日期填写</text><text x="300" y="109">及先后顺序</text></g>
+            <g data-node-id="generate_csv"><rect x="445" y="55" width="160" height="70" rx="6" fill="#edf5f0" stroke="#466454"/><text x="525" y="96">生成 CSV</text></g>
+            <g data-node-id="return_link"><rect x="645" y="55" width="160" height="70" rx="6" fill="#edf5f0" stroke="#466454"/><text x="725" y="96">返回下载入口</text></g>
+            <g data-node-id="reject_range"><rect x="215" y="205" width="170" height="70" rx="6" fill="#fff6e9" stroke="#8a6431"/><text x="300" y="247">返回参数错误</text></g>
+            <text x="415" y="73" font-size="13">有效</text>
+            <text x="390" y="172" font-size="13">缺失或开始日晚于结束日</text>
+          </g>
+        </svg>
+      </div>
+      <figcaption>有效路径到达下载入口；无效路径在参数校验处结束。图中的条件属于上方声明的合成规则。</figcaption>
+    </figure>
+    <div data-flow-controls hidden>
+      <button type="button" data-flow-prev>上一项说明</button>
+      <button type="button" data-flow-next>下一项说明</button>
+      <span data-flow-status role="status" aria-live="polite" aria-atomic="true"></span>
+    </div>
+    <ol class="flow-steps">
+      <li data-flow-step data-node-id="choose_range">
+        <h3><button type="button" data-flow-select disabled>选择日期范围</button></h3>
+        <p>用户提供开始日期和结束日期，例如 2026-11-01 至 2026-11-07。</p>
+        <dl><dt>输入</dt><dd>两个日期。</dd><dt>输出</dt><dd>交给日期校验步骤的参数。</dd></dl>
+      </li>
+      <li data-flow-step data-node-id="validate_range">
+        <h3><button type="button" data-flow-select disabled>检查日期填写及先后顺序</button></h3>
+        <p>两个日期都已填写，且开始日期不晚于结束日期时，继续生成 CSV；任一条件不成立时返回参数错误。</p>
+        <dl><dt>输入</dt><dd>开始日期和结束日期。</dd><dt>结果</dt><dd>允许继续，或拒绝本次导出。</dd></dl>
+      </li>
+      <li data-flow-step data-node-id="generate_csv">
+        <h3><button type="button" data-flow-select disabled>生成 CSV</button></h3>
+        <p>把指定日期范围内的数据转换成 CSV 文件。</p>
+        <dl><dt>前提</dt><dd>日期参数有效。</dd><dt>输出</dt><dd>本次导出的文件。</dd></dl>
+      </li>
+      <li data-flow-step data-node-id="return_link">
+        <h3><button type="button" data-flow-select disabled>返回下载入口</button></h3>
+        <p>文件生成完成后，向用户提供下载入口，本次有效路径结束。</p>
+        <dl><dt>前提</dt><dd>文件已生成。</dd><dt>结果</dt><dd>用户得到导出结果。</dd></dl>
+      </li>
+      <li data-flow-step data-node-id="reject_range">
+        <h3><button type="button" data-flow-select disabled>返回参数错误</button></h3>
+        <p>指出日期参数错误并结束；CSV 生成和下载入口返回均不执行。</p>
+        <dl><dt>条件</dt><dd>日期缺失，或开始日晚于结束日。</dd><dt>结果</dt><dd>本次请求被拒绝。</dd></dl>
+      </li>
+    </ol>
+    <aside aria-labelledby="evidence-title">
+      <h3 id="evidence-title">接入真实文档时补齐依据</h3>
+      <p>将节点 ID 关联到真实的入口、条件判断、返回结果及测试。这里没有源码链接、实际运行结果或已核验状态。</p>
+    </aside>
+  </repo-flow-reader>
+  <p>这个组件不会高亮 SVG 内节点。若需要图内高亮或路径切换，应从唯一流程模型生成映射并另行验证。</p>
+</main>
+</body>
+</html>

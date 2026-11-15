@@ -1,0 +1,4 @@
+interface:
+  display_name: "可视化文档站"
+  short_description: "把已核验的仓库说明构建成可搜索、可交互并便于长期维护的文档站"
+  default_prompt: "使用 $repo-docs-site 将已有仓库文档做成清晰可读的 HTML 文档站并验证页面。"

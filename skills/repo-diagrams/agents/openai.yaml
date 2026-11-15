@@ -1,0 +1,4 @@
+interface:
+  display_name: "模块流程图"
+  short_description: "根据实际入口与分支生成可追溯的模块流程、时序与业务状态图"
+  default_prompt: "使用 $repo-diagrams 为仓库每个模块绘制与代码一致的 Mermaid 流程图并生成 SVG。"

@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "snapshot": {"commit": "REPLACE_WITH_ACTUAL_COMMIT", "worktree": "unknown", "captured_at": "REPLACE_WITH_ACTUAL_TIMESTAMP"},
+  "glossary": "docs/glossary.json",
+  "modules": [
+    {
+      "id": "example-export",
+      "title": "示例导出模块，须替换为真实模块",
+      "page": "docs/modules/example-export.md",
+      "source_paths": ["src/example_export.py"],
+      "entrypoints": [{"path": "src/example_export.py", "symbol": "export_report", "trigger": "示例调用，须核实真实注册"}],
+      "diagrams": [{"source": "docs/diagrams/example-export.mmd", "kind": "flowchart", "generated": "docs/generated/example-export.svg", "node_ids": ["start", "validate", "done"]}],
+      "evidence": [{"id": "example-export-validation", "kind": "source", "path": "src/example_export.py", "symbol": "export_report", "statement": "待从真实实现填写校验条件与结果", "status": "pending", "method": "read", "critical": true}],
+      "terms": [],
+      "depends_on": [],
+      "owner": null,
+      "review": {"code": "pending", "reader": "pending", "site": "pending"}
+    }
+  ],
+  "excluded": [],
+  "open_questions": [{"question": "此文件仅为格式示例，真实仓库调查尚未填入", "blocking": true}]
+}

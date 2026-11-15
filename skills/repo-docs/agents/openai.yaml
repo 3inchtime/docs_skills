@@ -1,0 +1,4 @@
+interface:
+  display_name: "仓库交接文档"
+  short_description: "从当前代码提取证据，生成新同事能接手并持续维护的完整技术文档"
+  default_prompt: "使用 $repo-docs 为当前仓库生成中文交接文档，覆盖全部模块、流程图、业务词典与验证记录。"

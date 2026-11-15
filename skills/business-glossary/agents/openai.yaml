@@ -1,0 +1,4 @@
+interface:
+  display_name: "业务专有词典"
+  short_description: "提取业务专有词并解释行业语境、本系统口径、实例和真实代码映射"
+  default_prompt: "使用 $business-glossary 提取本仓库业务专有名词，编写带例子和代码映射的中文词典。"

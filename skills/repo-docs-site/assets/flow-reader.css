@@ -1,0 +1,64 @@
+repo-flow-reader {
+  --flow-ink: #17362e;
+  --flow-muted: #455b54;
+  --flow-border: #b4c5bd;
+  --flow-surface: #ffffff;
+  --flow-selected: #edf5f0;
+  --flow-accent: #116442;
+  display: block;
+  color: var(--flow-ink);
+  background: var(--flow-surface);
+  border: 1px solid var(--flow-border);
+  border-radius: 0.75rem;
+  padding: clamp(1rem, 3vw, 1.75rem);
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+repo-flow-reader *,
+repo-flow-reader *::before,
+repo-flow-reader *::after { box-sizing: border-box; }
+repo-flow-reader [hidden] { display: none !important; }
+repo-flow-reader h2 { margin: 0 0 0.5rem; font-size: 1.4rem; line-height: 1.4; }
+repo-flow-reader h3 { margin: 0 0 0.5rem; font-size: 1rem; }
+repo-flow-reader p { margin: 0.5rem 0; }
+repo-flow-reader .flow-intro,
+repo-flow-reader figcaption { color: var(--flow-muted); }
+repo-flow-reader figure { margin: 1.25rem 0; }
+repo-flow-reader .flow-diagram { overflow-x: auto; padding: 0.5rem; }
+repo-flow-reader .flow-diagram svg { display: block; width: 100%; min-width: 35rem; height: auto; }
+repo-flow-reader .flow-diagram img { display: block; width: 100%; min-width: 35rem; height: auto; }
+repo-flow-reader figcaption { margin-top: 0.75rem; font-size: 0.9rem; }
+repo-flow-reader [data-flow-controls] { display: flex; flex-wrap: wrap; align-items: center; gap: 0.65rem; margin: 1rem 0; }
+repo-flow-reader button { font: inherit; color: var(--flow-ink); cursor: pointer; }
+repo-flow-reader [data-flow-prev],
+repo-flow-reader [data-flow-next] { border: 1px solid var(--flow-border); border-radius: 0.35rem; background: #f6faf7; padding: 0.4rem 0.8rem; }
+repo-flow-reader button:disabled { cursor: default; opacity: 0.5; }
+repo-flow-reader button:focus-visible,
+repo-flow-reader a:focus-visible { outline: 3px solid var(--flow-accent); outline-offset: 3px; }
+repo-flow-reader [data-flow-status] { font-size: 0.9rem; color: var(--flow-muted); }
+repo-flow-reader .flow-steps { padding-left: 1.5rem; margin: 1rem 0; }
+repo-flow-reader [data-flow-step] { border: 1px solid var(--flow-border); border-radius: 0.4rem; padding: 1rem; margin: 0.75rem 0; background: var(--flow-surface); }
+repo-flow-reader [data-flow-step].flow-current { border: 2px solid var(--flow-accent); padding: calc(1rem - 1px); background: var(--flow-selected); }
+repo-flow-reader [data-flow-select] { display: inline; border: 0; background: transparent; padding: 0; text-align: left; font-weight: 700; }
+repo-flow-reader [data-flow-select]:disabled { opacity: 1; cursor: default; }
+repo-flow-reader [data-flow-select][aria-current]::after { content: " · 当前说明"; font-size: 0.8rem; color: var(--flow-accent); }
+repo-flow-reader dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 0.3rem 1rem; margin: 0.7rem 0 0; font-size: 0.9rem; }
+repo-flow-reader dt { font-weight: 700; }
+repo-flow-reader dd { margin: 0; }
+repo-flow-reader a { color: var(--flow-accent); text-decoration: underline; text-underline-offset: 0.16em; }
+@media (max-width: 35rem) {
+  repo-flow-reader dl { display: block; }
+  repo-flow-reader dd { margin-bottom: 0.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  repo-flow-reader, repo-flow-reader * { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+}
+@media print {
+  repo-flow-reader { border: 0; border-radius: 0; padding: 0; color: #111; }
+  repo-flow-reader [data-flow-controls] { display: none !important; }
+  repo-flow-reader .flow-diagram { overflow: visible; }
+  repo-flow-reader .flow-diagram svg, repo-flow-reader .flow-diagram img { min-width: 0; width: 100%; }
+  repo-flow-reader [data-flow-step], repo-flow-reader [data-flow-step].flow-current { break-inside: avoid; background: white; border: 1px solid #777; padding: 0.7rem; }
+  repo-flow-reader [data-flow-select][aria-current]::after { content: none; }
+  repo-flow-reader [data-flow-select] { cursor: default; }
+}

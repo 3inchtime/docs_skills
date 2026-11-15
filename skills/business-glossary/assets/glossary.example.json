@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "example_only": true,
+  "terms": [
+    {
+      "id": "example-hk-odd-lot",
+      "name": "碎股（香港 odd lot 语境示例）",
+      "aliases": ["odd lot"],
+      "definition": "少于一个完整买卖单位的证券数量。",
+      "scope": "香港证券交易概念示例；每手数量由相应证券的规则决定。",
+      "project_meaning": "待确认：此项仅演示词条结构，尚未确定目标仓库是否涉及该业务，未建立代码映射。",
+      "example": "假设某证券每手为 100 股，35 股不足一手；这里的界限是每手数量，不是是否少于一整股。",
+      "code_refs": [],
+      "sources": [
+        {
+          "title": "HKEX Securities Market Operations FAQ",
+          "url": "https://www.hkex.com.hk/Global/Exchange/FAQ/Securities-Market/Trading/Securities-Market-Operations?sc_lang=en&search=Special+Trading+Unit+Market"
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "example-fractional-share",
+      "name": "不足一整股的股份（fractional share 示例）",
+      "aliases": ["fractional share"],
+      "definition": "少于一整股的股份。",
+      "scope": "Investor.gov 所解释的 fractional share 概念示例。",
+      "project_meaning": "待确认：此项不代表目标仓库的产品能力、数量精度或交易规则，未建立代码映射。",
+      "example": "0.25 股为一整股的四分之一；该概念与每手 100 股时的 35 股不是同一个计量边界。",
+      "code_refs": [],
+      "sources": [
+        {
+          "title": "Investor.gov: Fractional Share Investing",
+          "url": "https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-bulletins/fractional-share-investing-buying-slice-instead-whole-share"
+        }
+      ],
+      "status": "pending"
+    }
+  ]
+}
