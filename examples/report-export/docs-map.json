@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "snapshot": {
+    "commit": "9883687af2beff124b9d8769899e2973f98d54e7",
+    "worktree": "clean",
+    "captured_at": "2026-11-15"
+  },
+  "glossary": "glossary.json",
+  "modules": [{
+    "id": "report-export",
+    "title": "按报告期间导出 CSV",
+    "page": "README.md",
+    "source_paths": ["export_report.py", "reports.csv"],
+    "entrypoints": [{"path": "export_report.py", "symbol": "main", "trigger": "从命令行传入起止日期"}],
+    "diagrams": [{"source": "flow.mmd", "kind": "flowchart", "node_ids": ["dates", "valid", "error", "header", "nextrow", "inrange", "emit", "done"]}],
+    "evidence": [{
+      "id": "inclusive-range",
+      "kind": "source",
+      "method": "read",
+      "path": "export_report.py",
+      "symbol": "main",
+      "statement": "仅输出 date 位于起止日闭区间内的记录。",
+      "status": "verified"
+    }],
+    "terms": ["report-period"],
+    "depends_on": [],
+    "review": {"code": "passed", "reader": "pending", "site": "pending"}
+  }]
+}

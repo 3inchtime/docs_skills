@@ -1,0 +1,10 @@
+flowchart TD
+  dates["用户输入起止日期"] --> valid{"两个日期有效，且开始日不晚于结束日？"}
+  valid -->|否| error["向 stderr 写入参数错误，以状态码 2 退出"]
+  valid -->|是| header["向 stdout 写入 CSV 表头"]
+  header --> nextrow{"还有记录？"}
+  nextrow -->|是| inrange{"记录日期在闭区间内？"}
+  inrange -->|是| emit["写入日期与报告编号"]
+  emit --> nextrow
+  inrange -->|否| nextrow
+  nextrow -->|否| done["以状态码 0 结束"]

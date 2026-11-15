@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "terms": [{
+    "id": "report-period",
+    "name": "报告期间",
+    "aliases": [],
+    "definition": "一次报告导出所覆盖的起止日期范围。",
+    "scope": "本示例的报告登记表",
+    "project_meaning": "按每条记录的 date 字段筛选，起止两天都计入。",
+    "example": "11 月 1 日至 2 日的报告期间包含 R-001 和 R-002。",
+    "code_refs": [{"path": "export_report.py", "symbol": "main"}],
+    "sources": [{"title": "报告导出的示例数据", "path": "reports.csv"}],
+    "status": "verified"
+  }]
+}

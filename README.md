@@ -1,8 +1,8 @@
 # Docs Skills
 
-让新同事看懂当前代码，并能继续开发的中文技术文档技能包。
+Docs Skills 是一组用于代码仓库交接的 Agent Skills。接手项目的工程师可以用它沿着真实入口读懂一个模块：请求从哪里进入，哪些条件会改变流程，改动后该跑什么测试。默认产出中文文档。
 
-工作流程：读取真实代码与配置 → 建立模块和证据清单 → 写清业务行为 → 为每模块画流程 → 构建可视化文档 → 独立审查 → 随 PR 维护。
+第一次整理整个仓库时，从 `$repo-docs` 开始。已有文档、只想更新一张图或审查一次 PR 时，可以直接选用下表中的专用技能。
 
 ## 五个技能
 
@@ -14,17 +14,18 @@
 | `business-glossary` | 业务专有名词、适用语境、本系统口径、例子和代码映射 | [SKILL.md](skills/business-glossary/SKILL.md) |
 | `repo-docs-review` | 模块覆盖、事实审查、独立读者测试、变更影响与持续维护 | [SKILL.md](skills/repo-docs-review/SKILL.md) |
 
-总控按阶段调用其他技能，避免一次加载所有指令。专用技能也可单独使用。内容为本仓库原创编排，参考的上游技能和方法见 [SOURCES.md](SOURCES.md)，不需要安装全部上游技能才能使用本包。
+技能、模板和辅助工具随仓库提供。上游项目及采用的方法见 [SOURCES.md](SOURCES.md)。
 
 ## 安装与使用
 
-在支持 Agent Skills 的代码助手中安装。以本地 Codex 为例，当前 Vercel skills CLI 要求 Node.js 22.20+：
+在**需要编写文档的业务仓库根目录**打开终端。以下示例使用 Codex 和 Vercel skills CLI，需要 Node.js 22.20 或更高版本。先列出可用技能，再安装：
 
 ```bash
+npx skills add 3inchtime/docs_skills --list
 npx skills add 3inchtime/docs_skills -a codex
 ```
 
-按安装器提示选择技能。保留安装生成的版本锁文件；私有仓库需要本机 Git 已具有对应读取权限。
+按提示选择技能。做完整交接时选全部五项。仓库处于私有状态时，安装者需要读取权限；已配置 GitHub SSH 的用户可将安装源写为 `git@github.com:3inchtime/docs_skills.git`。若已将本包克隆到本机，可将命令中的 `3inchtime/docs_skills` 换成本包的本地绝对路径。安装参数见 [skills CLI 命令文档](https://github.com/vercel-labs/skills/blob/main/docs/commands.md#skills-add)。
 
 然后在**需要编写文档的业务仓库**中发出任务：
 
@@ -38,6 +39,22 @@ npx skills add 3inchtime/docs_skills -a codex
 ```
 
 只更新一部分时直接指定范围，例如“使用 `$repo-diagrams` 核对并更新订单模块流程”或“使用 `$repo-docs-review` 检查本次变更影响的文档”。
+
+## 试跑报告导出示例
+
+从本包根目录运行下面的命令。示例登记表有三条记录，命令应输出 CSV 表头和前两条报告（`R-001`、`R-002`）。完整练习包含边界条件、流程图源、业务词典和文档核验命令。见[报告导出示例](examples/report-export/README.md)。
+
+```bash
+python3 examples/report-export/export_report.py 2026-11-01 2026-11-02
+```
+
+也可以单独试用文档站技能自带的 HTML 教学组件：
+
+```bash
+python3 skills/repo-docs-site/scripts/build_offline.py --output report-export.html
+```
+
+用浏览器打开生成的 `report-export.html`，对照流程图阅读每一步的输入和输出。这个单文件示例只需 Python 3.10+ 即可生成。
 
 ## 明确而准确的写法
 
@@ -87,3 +104,13 @@ node --check skills/repo-docs-site/assets/flow-reader.js
 ```
 
 GitHub Actions 执行同样的静态检查和工具测试。工具测试包含专门标注的模拟 Mermaid 编译器，验证失败回滚和输出保护；它们不代表真实 Mermaid 渲染、Astro 站点构建或业务语义已经通过。使用本包编写具体仓库文档时，还要运行对应项目构建并实际检查页面。
+
+## 参与贡献
+
+报告问题时，请写明技能名、触发任务、期望结果和实际结果。工具问题请附最小复现命令与错误输出。来自私有业务仓库的例子请先替换客户数据和内部地址。
+
+修改技能时，将触发条件与工作步骤放在对应的 `SKILL.md`，详细约定放在 `references/`，可复用模板放在 `assets/`。提交 PR 前运行上面的三项检查，并说明用哪个示例验证了改动。
+
+## 许可证
+
+本技能包采用 [MIT 许可证](LICENSE)。每个技能目录都附带许可证，单独安装时也会随包提供。
