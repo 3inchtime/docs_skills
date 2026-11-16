@@ -2,19 +2,21 @@
 
 Docs Skills 是一组用于代码仓库交接的 Agent Skills。接手项目的工程师可以用它沿着真实入口读懂一个模块：请求从哪里进入，哪些条件会改变流程，改动后该跑什么测试。默认产出中文文档。
 
-第一次整理整个仓库时，从 `$repo-docs` 开始。已有文档、只想更新一张图或审查一次 PR 时，可以直接选用下表中的专用技能。
+**先看成品。** 对一个只有三行登记数据的示例仓库，交接文档回答了一个容易写错的问题：开始日和结束日相同时，当天的记录会导出吗？输入 `2026-11-02 2026-11-02`，输出恰好包含 `R-002`。你可以沿着[模块说明](examples/report-export/README.md)、[源码](examples/report-export/export_report.py)和[业务词典](examples/report-export/glossary.json)核对这个答案。
 
-## 五个技能
+## 按任务选技能
 
-| 技能 | 工作 | 入口 |
+| 你现在要做什么 | 可以直接发给助手的任务 | 交付物示例 |
 | --- | --- | --- |
-| `repo-docs` | 总控、仓库调查、完整模块正文、新人上手与开发指南 | [SKILL.md](skills/repo-docs/SKILL.md) |
-| `repo-diagrams` | 真实模块流程、时序、状态和数据关系；Mermaid 构建 SVG | [SKILL.md](skills/repo-diagrams/SKILL.md) |
-| `repo-docs-site` | 将已核验内容做成文档站，提供可复用流程说明组件 | [SKILL.md](skills/repo-docs-site/SKILL.md) |
-| `business-glossary` | 业务专有名词、适用语境、本系统口径、例子和代码映射 | [SKILL.md](skills/business-glossary/SKILL.md) |
-| `repo-docs-review` | 模块覆盖、事实审查、独立读者测试、变更影响与持续维护 | [SKILL.md](skills/repo-docs-review/SKILL.md) |
+| 让新人接手一个仓库 | 使用 [$repo-docs](skills/repo-docs/SKILL.md) 沿入口解释各模块，并指出在哪里修改和验证。 | [模块交接页](examples/report-export/README.md) |
+| 讲清一次请求的分支和结果 | 使用 [$repo-diagrams](skills/repo-diagrams/SKILL.md) 画出报告导出的日期校验、筛选过程和错误出口。 | [Mermaid 图源](examples/report-export/flow.mmd) |
+| 对齐业务词的口径 | 使用 [$business-glossary](skills/business-glossary/SKILL.md) 解释“报告期间”是否包含起止日，用一条真实记录举例。 | [带源码引用的词条](examples/report-export/glossary.json) |
+| 把已有说明做成文档站 | 使用 [$repo-docs-site](skills/repo-docs-site/SKILL.md) 把已核验的流程图和步骤放在同一页，逐步说明输入和输出。 | [可离线生成的 HTML 教学组件](skills/repo-docs-site/assets/flow-reader.example.html) |
+| 检查 PR 后哪些文档要改 | 使用 [$repo-docs-review](skills/repo-docs-review/SKILL.md) 核对日期边界改动会影响哪些页面、图和词条。 | [一条完整的审查发现](skills/repo-docs-review/references/date-boundary-example.md) |
 
-技能、模板和辅助工具随仓库提供。上游项目及采用的方法见 [SOURCES.md](SOURCES.md)。
+做完整交接时，从 `$repo-docs` 的模块清单开始。图和词典共用清单中的入口、源码与模块 ID。模块页准备好后，用 `$repo-docs-site` 把内容接入项目已有文档站，再用 `$repo-docs-review` 检查规则和读者任务。单项任务可以直接从表中对应的技能开始。
+
+写第一条主流程时，选一个读者能观察到的结果，沿途记录每个模块收到什么、做了什么决定、下一方实际拿到什么。审查时从结果反查源码，再换一个输入让独立读者推演。可直接使用[系统运行说明模板](skills/repo-docs/assets/system-flow-template.md)和[五项语义检查](skills/repo-docs-review/references/review-protocol.md#五项语义检查)。
 
 ## 安装与使用
 
@@ -25,7 +27,13 @@ npx skills add 3inchtime/docs_skills --list
 npx skills add 3inchtime/docs_skills -a codex
 ```
 
-按提示选择技能。做完整交接时选全部五项。仓库处于私有状态时，安装者需要读取权限；已配置 GitHub SSH 的用户可将安装源写为 `git@github.com:3inchtime/docs_skills.git`。若已将本包克隆到本机，可将命令中的 `3inchtime/docs_skills` 换成本包的本地绝对路径。安装参数见 [skills CLI 命令文档](https://github.com/vercel-labs/skills/blob/main/docs/commands.md#skills-add)。
+按提示选择技能。做完整交接时选全部五项。只想审查文档时，可以直接安装一个技能：
+
+```bash
+npx skills add 3inchtime/docs_skills -a codex --skill repo-docs-review
+```
+
+仓库处于私有状态时，安装者需要读取权限；已配置 GitHub SSH 的用户可将安装源写为 `git@github.com:3inchtime/docs_skills.git`。若已将本包克隆到本机，可将命令中的 `3inchtime/docs_skills` 换成本包的本地绝对路径。安装参数见 [skills CLI 命令文档](https://github.com/vercel-labs/skills/blob/main/docs/commands.md#skills-add)。
 
 然后在**需要编写文档的业务仓库**中发出任务：
 
@@ -110,6 +118,8 @@ GitHub Actions 执行同样的静态检查和工具测试。工具测试包含�
 报告问题时，请写明技能名、触发任务、期望结果和实际结果。工具问题请附最小复现命令与错误输出。来自私有业务仓库的例子请先替换客户数据和内部地址。
 
 修改技能时，将触发条件与工作步骤放在对应的 `SKILL.md`，详细约定放在 `references/`，可复用模板放在 `assets/`。提交 PR 前运行上面的三项检查，并说明用哪个示例验证了改动。
+
+技能编排和文档方法的来源，以及本包对公开技能库的取舍，见 [SOURCES.md](SOURCES.md)。
 
 ## 许可证
 
